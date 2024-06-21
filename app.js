@@ -1,4 +1,4 @@
-const CinemaService = require('./Services/CinemaService.js');
+const Service = require('./Services/CinemaService.js');
 
 
 async function test() {
@@ -46,26 +46,7 @@ async function test() {
 
 
 (async () => {
-    let temp = await CinemaService.Create('CGV', '123 Nguyen Tri Phuong', 1);
-
-    if (!temp) {
-        console.log('error');
-    }
-
-    let cinema = await CinemaService.GetAll();
+    await Service.Delete(4);
+    let cinema = await Service.GetAll();
     console.log('All cinema:', JSON.stringify(cinema, null, 2));
-    
-    cinema = await CinemaService.GetById(4);
-    console.log('Cinema with id 4:', JSON.stringify(cinema, null, 2));
-
-    //cinema = await CinemaService.GetByProvinceId(1);
-    //console.log('Cinema with province city id 1:', JSON.stringify(cinema, null, 2));
-    
-    await CinemaService.Update(4, 'CGVV', '321 Nguyen Tri Phuong', 2);
-    cinema = await CinemaService.GetById(4);
-    console.log('Cinema after update:', JSON.stringify(cinema, null, 2));
-    
-    //await CinemaService.Delete(2);
-    //cinema = await CinemaService.GetAll();
-    //console.log('Cinema after Delete:', JSON.stringify(cinema, null, 2));
 })();

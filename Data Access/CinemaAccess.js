@@ -1,4 +1,6 @@
-const Cinema = require('../Model/Cinema.js');
+const models = require('../models/index.js')
+const Cinema = models.cinema;
+const ProvinceCity = models.provincecity;
 const {Op} = require('sequelize');
 
 exports.create = async function (cinema) {
@@ -6,12 +8,13 @@ exports.create = async function (cinema) {
 }
 
 exports.getAll = async function () {
-    return await Cinema.findAll();
+    return await Cinema.findAll({include: ProvinceCity});
 }
 
 exports.getById = async function (id) {
     let cinema = await Cinema.findAll({
         where: {id: id},
+        include: ProvinceCity,
     });
 
     if (!cinema) {
@@ -23,7 +26,8 @@ exports.getById = async function (id) {
 
 exports.getByProvinceId = async function (provinceId) {
     let cinemas = await Cinema.findAll({
-        where: {ProvinceCityId: provinceId}
+        where: {ProvinceCityId: provinceId},
+        include: ProvinceCity
     });
 
     if (!cinemas) {

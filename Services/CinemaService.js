@@ -1,5 +1,6 @@
 const CinemaDal = require('../Data Access/CinemaAccess');
-const Cinema = require('../Model/Cinema');
+const models = require('../models/index.js');
+const Cinema = models.cinema;
 
 exports.Create = async function (name, address, provinceId) {
     let cinema = Cinema.build({Name: name, Address: address, ProvinceCityId: provinceId});
@@ -26,6 +27,7 @@ exports.GetAll = async function () {
 exports.GetById = async function (id) {
     try {
         let cinema = await CinemaDal.getById(id);
+        return cinema;
     } catch (error) {
         console.log(error);
     }
