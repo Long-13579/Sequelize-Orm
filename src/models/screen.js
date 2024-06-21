@@ -1,20 +1,16 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-    const cinema = sequelize.define('cinema',
+    const screen = sequelize.define('screen',
         {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            Name: {
+            SeatMatrix: {
                 type: DataTypes.STRING,
                 allowNull: false
-            },
-            Address: {
-                type: DataTypes.STRING,
-                allowNull: false,
             },
         },
         {
@@ -23,9 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    cinema.associate = (db) => {
-        cinema.belongsTo(db.provincecity, {foreignKey: 'ProvinceCityId'});
+    screen.associate = (db) => {
+        screen.belongsTo(db.cinema, {foreignKey: 'CinemaId'});
     };
 
-    return cinema;
+    return screen;
 }

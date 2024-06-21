@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     provincecity.associate = (db) => {
-        provincecity.hasMany(db.cinema);
+        provincecity.hasMany(db.cinema, {foreignKey: 'ProvinceCityId'});
     };
 
     return provincecity;

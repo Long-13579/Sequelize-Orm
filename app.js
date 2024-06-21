@@ -1,52 +1,17 @@
-const Service = require('./Services/CinemaService.js');
+const express = require('express');
 
+const cinemaRoute = require('./routes/Cinema.js')
 
-async function test() {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
+const app = express();
+const PORT = 3000;
+
+app.use('/cinema', cinemaRoute);
+
+app.listen(PORT, (error) =>{
+    if(!error)
+        console.log("Server is Successfully Running, and App is listening on port "+ PORT)
+    else 
+        console.log("Error occurred, server can't start", error);
     }
-}
+);
 
-//test().then(() => {sequelize.close()});
-
-/*const User = sequelize.define(
-    'User',
-    {
-        Id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        FirstName: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        LastName: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-    }
-);*/
-
-
-
-/*
-(async () => {
-    const user = await User.create({FirstName: 'Cuong', LastName: 'Nguyen'});
-    console.log(user.toJSON());
-    user.update({
-        FirstName: 'Dat',
-        LastName: 'Chanh',
-    });
-})();
-*/
-
-
-(async () => {
-    await Service.Delete(4);
-    let cinema = await Service.GetAll();
-    console.log('All cinema:', JSON.stringify(cinema, null, 2));
-})();
