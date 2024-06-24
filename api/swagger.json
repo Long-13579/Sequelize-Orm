@@ -180,6 +180,7 @@
         },
         "delete": {
           "description": "Delete cinema from database",
+          "tags": ["Cinema"],
           "parameters": [
             {
               "name": "cinemaId",
