@@ -19,26 +19,26 @@
               "type": "integer",
               "description": "The auto-generated id of cinema"
             },
-            "Name": {
+            "name": {
               "type": "string",
               "description": "Name of cinema"
             },
-            "Address": {
+            "address": {
               "type": "string",
               "description": "Address of cinema"
             },
-            "ProvinceCity": {
+            "provinceCity": {
               "$ref": "#/components/schemas/provinceCity",
               "description": ""
             }
           },
           "example": {
             "id": 1, 
-            "Name": "CGV VinCom",
-            "Address": "123 lalalal",
-            "ProvinceCity": {
+            "name": "CGV VinCom",
+            "address": "123 lalalal",
+            "provinceCity": {
               "id": 1,
-              "Name": "Da Nang"
+              "name": "Da Nang"
             }
           }
         },
@@ -52,9 +52,60 @@
               "type": "integer",
               "description": "The auto-generated id of province/city"
             },
-            "Name": {
+            "name": {
               "type": "string",
               "description": "Name of province/city"
+            }
+          }
+        },
+        "screen": {
+          "type": "object",
+          "properties": {
+            "property": {
+              "type": "integer"
+            }
+          }
+        },
+        "cinemaDto": {
+          "type": "object",
+          "required": [
+            "id", "Name", "Address", "ProvinceCity"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated id of cinema"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of cinema"
+            },
+            "address": {
+              "type": "string",
+              "description": "Address of cinema"
+            },
+            "provinceCityId": {
+              "type": "integer",
+              "description": "Id of province/city"
+            }
+          },
+          "example": {
+            "id": 1, 
+            "name": "CGV VinCom",
+            "address": "123 lalalal",
+            "provinceCityId": 1
+          }
+        }
+      },
+      "requestBodies": {
+        "cinemaBody": {
+          "description": "Cinema information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/cinemaDto"
+              }
             }
           }
         }
@@ -76,6 +127,15 @@
               },
               "required": false,
               "description": "Province/city id to get list cinema by province/city"
+            },
+            {
+                "name": "cinemaId",
+                "in": "query",
+                "schema": {
+                  "type": "integer"
+                },
+                "required": false,
+                "description": "Province/city id to get list cinema by province/city"
             }
           ],
           "responses": {
@@ -105,15 +165,7 @@
           "tags": ["Cinema"],
           "parameters": [],
           "requestBody": {
-            "description": "Cinema information",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/cinema"
-                }
-              }
-            }
+            "$ref": "#/components/requestBodies/cinemaBody"
           },
           "responses": {
             "200": {
@@ -126,15 +178,7 @@
           "tags": ["Cinema"],
           "parameters": [],
           "requestBody": {
-            "description": "Cinema information",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/cinema"
-                }
-              }
-            }
+            "$ref": "#/components/requestBodies/cinemaBody"
           },
           "responses": {
             "200": {
