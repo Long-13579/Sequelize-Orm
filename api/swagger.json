@@ -1,0 +1,201 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+      "title":"API Title",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"http://localhost:3000"}
+    ],
+    "components": {
+      "schemas": {
+        "cinema": {
+          "type": "object",
+          "required": [
+            "id", "Name", "Address", "ProvinceCity"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated id of cinema"
+            },
+            "Name": {
+              "type": "string",
+              "description": "Name of cinema"
+            },
+            "Address": {
+              "type": "string",
+              "description": "Address of cinema"
+            },
+            "ProvinceCity": {
+              "$ref": "#/components/schemas/provinceCity",
+              "description": ""
+            }
+          },
+          "example": {
+            "id": 1, 
+            "Name": "CGV VinCom",
+            "Address": "123 lalalal",
+            "ProvinceCity": {
+              "id": 1,
+              "Name": "Da Nang"
+            }
+          }
+        },
+        "provinceCity": {
+          "type": "object",
+          "required": [
+            "id", "Name"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated id of province/city"
+            },
+            "Name": {
+              "type": "string",
+              "description": "Name of province/city"
+            }
+          }
+        }
+      }
+    },
+    "paths": {
+      "/cinema": {
+        "get": {
+          "tags": [
+            "Cinema"
+          ],
+          "description": "Get list cinemas from database",
+          "parameters": [
+            {
+              "name": "provinceId",
+              "in": "query",
+              "schema": {
+                "type": "integer"
+              },
+              "required": false,
+              "description": "Province/city id to get list cinema by province/city"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/cinema"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad Resquest"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "post": {
+          "description": "Add cinema into database",
+          "tags": ["Cinema"],
+          "parameters": [],
+          "requestBody": {
+            "description": "Cinema information",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cinema"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "put": {
+          "description": "Update cinema informaiton ",
+          "tags": ["Cinema"],
+          "parameters": [],
+          "requestBody": {
+            "description": "Cinema information",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/cinema"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/cinema/{cinemaId}": {
+        "get": {
+          "tags": [
+            "Cinema"
+          ],
+          "description": "",
+          "parameters": [
+            {
+              "name": "cinemaId",
+              "in": "path",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "aplication/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/cinema"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "Delete cinema from database",
+          "parameters": [
+            {
+              "name": "cinemaId",
+              "in": "path",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      }
+    }
+  }

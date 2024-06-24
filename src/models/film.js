@@ -62,10 +62,12 @@ module.exports = (sequelize , DataTypes) => {
         }
     );
 
-    /*cinema.associate = (db) => {
-        cinema.belongsTo(db.provincecity, {foreignKey: 'ProvinceCityId'});
-        cinema.hasMany(db.screen, {foreignKey: 'CinemaId'});
-    };*/
+    film.associate = (db) => {
+        film.belongsToMany(db.category, {
+            through: db.film_to_category,
+            foreignKey: 'Filmid',
+        });
+    };
 
     return film;
 }

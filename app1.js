@@ -1,6 +1,7 @@
-const Screen = require('./src/Services/ScreenService');
+const temp = require('./src/Data Access/FilmAccess.js');
 
 (async () => {
-    let screen = await Screen.GetByCinemaId(10);
-    console.log(JSON.stringify(screen, null, 2));
+    let instants = await temp.getAll();
+    let cate = await instants[0].getCategories();
+    console.log(JSON.stringify(cate, null, 2));
 })();
