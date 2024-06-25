@@ -4,17 +4,9 @@ var router = express.Router();
 
 router.get('/', async (req, res) => {
     let provinceId = req.query.provinceId;
-    let cinemaId = req.query.cinemaId;
 
     if (provinceId) {
         let cinemas = await CinemaService.GetByProvinceId(provinceId);
-        res.status(200),
-        res.send(cinemas);
-        return;
-    }
-
-    if (cinemaId) {
-        let cinemas = await CinemaService.GetById(cinemaId);
         res.status(200),
         res.send(cinemas);
         return;
@@ -33,7 +25,7 @@ router.get('/:cinemaId', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    console.log(req.body.Name);
+    console.log(req.body);
     res.status(200);
     res.send();
 });

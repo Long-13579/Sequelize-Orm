@@ -60,16 +60,33 @@
         },
         "screen": {
           "type": "object",
+          "required": [
+            "id", "seatMatrix", "cinemaId"
+          ],
           "properties": {
-            "property": {
-              "type": "integer"
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated id of screen"
+            },
+            "seatMatrix": {
+              "type": "string",
+              "description": "Path of file seat matrix"
+            },
+            "cinemaId": {
+              "type": "integer",
+              "description": "The id of cinema"
             }
+          },
+          "example": {
+            "id": 1,
+            "seatMatrix": "./SeatMatrix/screen1.txt",
+            "cinemaId": 1
           }
         },
         "cinemaDto": {
           "type": "object",
           "required": [
-            "id", "Name", "Address", "ProvinceCity"
+            "id", "name", "address", "provinceCityId"
           ],
           "properties": {
             "id": {
@@ -95,6 +112,67 @@
             "address": "123 lalalal",
             "provinceCityId": 1
           }
+        },
+        "show": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "The auto-generated id of show"
+            },
+            "filmId": {
+              "type": "integer",
+              "description": "The film's id of this show"
+            },
+            "screenId": {
+              "type": "integer",
+              "description": "The screen's id of this show"
+            },
+            "timeStart": {
+              "type": "string",
+              "description": "The start time of this show"
+            },
+            "price": {
+              "type": "integer",
+              "description": "The price of this show"
+            },
+            "seatMatrix": {
+              "type": "string",
+              "description": "Path of file seat matrix"
+            },
+            "formatId": {
+              "type": "integer",
+              "description": "The id of format"
+            },
+            "subtitle": {
+              "type": "boolean",
+              "description": "True is have subtitle, false is have not subtile"
+            },
+            "dubbing": {
+              "type": "boolean",
+              "description": "True is have dubbing, false is have not dubbing"
+            }
+          }
+        }
+      },
+      "parameters": {
+        "CinemaPath": {
+          "name": "cinemaId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          },
+          "description": "Cinema's id"
+        },
+        "ScreenPath": {
+          "name": "screenId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          },
+          "description": "Screen's id"
         }
       },
       "requestBodies": {
@@ -105,6 +183,17 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/cinemaDto"
+              }
+            }
+          }
+        },
+        "screenBody": {
+          "description": "Screen information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/screen"
               }
             }
           }
@@ -127,15 +216,6 @@
               },
               "required": false,
               "description": "Province/city id to get list cinema by province/city"
-            },
-            {
-                "name": "cinemaId",
-                "in": "query",
-                "schema": {
-                  "type": "integer"
-                },
-                "required": false,
-                "description": "Province/city id to get list cinema by province/city"
             }
           ],
           "responses": {
@@ -172,19 +252,6 @@
               "description": "OK"
             }
           }
-        },
-        "put": {
-          "description": "Update cinema informaiton ",
-          "tags": ["Cinema"],
-          "parameters": [],
-          "requestBody": {
-            "$ref": "#/components/requestBodies/cinemaBody"
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
-            }
-          }
         }
       },
       "/cinema/{cinemaId}": {
@@ -195,12 +262,7 @@
           "description": "",
           "parameters": [
             {
-              "name": "cinemaId",
-              "in": "path",
-              "schema": {
-                "type": "integer"
-              },
-              "required": true
+              "$ref": "#/components/parameters/CinemaPath"
             }
           ],
           "responses": {
@@ -227,17 +289,129 @@
           "tags": ["Cinema"],
           "parameters": [
             {
-              "name": "cinemaId",
-              "in": "path",
-              "schema": {
-                "type": "integer"
-              },
-              "required": true
+              "$ref": "#/components/parameters/CinemaPath"
             }
           ],
           "responses": {
             "200": {
               "description": "OK"
+            }
+          }
+        },
+        "put": {
+          "description": "Update cinema informaiton ",
+          "tags": ["Cinema"],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/CinemaPath"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/cinemaBody"
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        }
+      },
+      "/screen": {
+        "get": {
+          "description": "Get list screens from database",
+          "tags": ["Screen"],
+          "parameters": [
+            {
+              "name": "cinemaId",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "Cinema id of this screen"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/screen"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        },
+        "post": {
+          "description": "Add cinema into database",
+          "tags": ["Screen"],
+          "parameters": [],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/screenBody"
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+          }
+        }
+      },
+      "/screen/{screenId}": {
+        "get": {
+          "description": "Get screen inforamtion by screen id",
+          "tags": ["Screen"],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/ScreenPath"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application.json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/screen"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "description": "Update screen information",
+          "tags": ["Screen"],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/ScreenPath"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/screenBody"
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
             }
           }
         }
