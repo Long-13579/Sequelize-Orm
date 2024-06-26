@@ -83,26 +83,6 @@
             "cinemaId": 1
           }
         },
-        "screenDto": {
-          "type": "object",
-          "required": [
-            "seatMatrix", "cinemaId"
-          ],
-          "properties": {
-            "seatMatrix": {
-              "type": "string",
-              "description": "Path of file seat matrix"
-            },
-            "cinemaId": {
-              "type": "integer",
-              "description": "The id of cinema"
-            }
-          },
-          "example": {
-            "seatMatrix": "./SeatMatrix/screen1.txt",
-            "cinemaId": 1
-          }
-        },
         "cinemaDto": {
           "type": "object",
           "required": [
@@ -180,53 +160,6 @@
             "dubbing": true
           }
         },
-        "showDto": {
-          "type": "object",
-          "properties": {
-            "filmId": {
-              "type": "integer",
-              "description": "The film's id of this show"
-            },
-            "screenId": {
-              "type": "integer",
-              "description": "The screen's id of this show"
-            },
-            "timeStart": {
-              "type": "string",
-              "description": "The start time of this show"
-            },
-            "price": {
-              "type": "integer",
-              "description": "The price of this show"
-            },
-            "seatMatrix": {
-              "type": "string",
-              "description": "Path of file seat matrix"
-            },
-            "formatId": {
-              "type": "integer",
-              "description": "The id of format"
-            },
-            "subtitle": {
-              "type": "boolean",
-              "description": "True is have subtitle, false is have not subtile"
-            },
-            "dubbing": {
-              "type": "boolean",
-              "description": "True is have dubbing, false is have not dubbing"
-            }
-          },
-          "example": {
-            "filmId": 1,
-            "screenId": 1,
-            "timeStart": "2024-06-25",
-            "price": 300,
-            "seatMatrix": "./seatMatrix.txt",
-            "formatId": 1,
-            "subtile": true,
-            "dubbing": true
-          }
-        },
         "film": {
           "type": "object",
           "properties": {
@@ -292,79 +225,6 @@
             "rateId": 1,
             "poster": "./poster.jpeg",
             "trailer": "./trailer.mp4"
-          }
-        },
-        "filmDto": {
-          "type": "object",
-          "properties": {
-            "filmName": {
-              "type": "string",
-              "description": "The name of film"
-            },
-            "duration": {
-              "type": "integer",
-              "description": "The duration of film"
-            },
-            "dateSrart": {
-              "type": "string",
-              "description": "The date start of film"
-            },
-            "dateEnd": {
-              "type": "string",
-              "description": "The date start of film"
-            },
-            "director": {
-              "type": "string",
-              "description": "The director of film"
-            },
-            "actor": {
-              "type": "string",
-              "description": "The actors of film"
-            },
-            "subtile": {
-              "type": "boolean",
-              "description": "True when film have subtitle"
-            },
-            "language": {
-              "type": "string",
-              "description": "The language of film"
-            },
-            "rateId": {
-              "type": "integer",
-              "description": "The rate of the film"
-            },
-            "poster": {
-              "type": "string",
-              "description": "The path of the poster file"
-            },
-            "trailer": {
-              "type": "string",
-              "description": "The path of the trailer video"
-            }
-          },
-          "example": {
-            "filmName": "Absolute cinema",
-            "duration": 300,
-            "dateSrart": "2024-06-25",
-            "dateEnd": "2024-06-26",
-            "director": "Absolute director",
-            "actor": "Absolute actors",
-            "subtile": true,
-            "language": "English",
-            "rateId": 1,
-            "poster": "./poster.jpeg",
-            "trailer": "./trailer.mp4"
-          }
-        },
-        "error": {
-          "type": "object",
-          "properties": {
-            "status": {
-              "type": "integer"
-            },
-            "message": {
-              "type": "string"
-            }
           }
         }
       },
@@ -460,36 +320,6 @@
               }
             }
           }
-        },
-        "404-NotFound": {
-          "description": "Not Found",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/error"
-              }
-            }
-          }
-        },
-        "400-BadRequest": {
-          "description": "Bad Request",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/error"
-              }
-            }
-          }
-        },
-        "500-ServerError": {
-          "description": "Internal Server Error",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/error"
-              }
-            }
-          }
         }
       },
       "parameters": {
@@ -500,10 +330,7 @@
           "schema": {
             "type": "integer"
           },
-          "description": "Cinema's id",
-          "example": 10,
-          "style": "simple",
-          "explode": false
+          "description": "Cinema's id"
         },
         "ScreenPath": {
           "name": "screenId",
@@ -512,10 +339,7 @@
           "schema": {
             "type": "integer"
           },
-          "description": "Screen's id",
-          "example": 10,
-          "style": "simple",
-          "explode": false
+          "description": "Screen's id"
         },
         "ShowPath": {
           "name": "showId",
@@ -524,10 +348,7 @@
           "schema": {
             "type": "integer"
           },
-          "description": "Show's id",
-          "example": 10,
-          "style": "simple",
-          "explode": false
+          "description": "Show's id"
         },
         "FilmQuery": {
           "name": "filmId",
@@ -536,10 +357,7 @@
           "schema": {
             "type": "integer"
           },
-          "description": "The id of film\n\n?filmId=10",
-          "example": 10,
-          "style": "form",
-          "explode": false
+          "description": "The id of film"
         },
         "ScreenQuery": {
           "name": "screenId",
@@ -548,10 +366,7 @@
           "schema": {
             "type": "integer"
           },
-          "description": "The id of screen\n\n?screenId=10",
-          "example": 10,
-          "style": "form",
-          "explode": false
+          "description": "The id of screen"
         },
         "DateTime": {
           "name": "dateTime",
@@ -560,9 +375,7 @@
           "schema": {
             "type": "string"
           },
-          "description": "The date time\n\n?dateTime=2024-01-01 00:00:00",
-          "example": "2024-01-01 00:00:00",
-          "style": "form"
+          "description": "The date time"
         },
         "Date": {
           "name": "date",
@@ -610,37 +423,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "id",
-                  "name",
-                  "address",
-                  "provinceCityId"
-                ],
-                "properties": {
-                  "id": {
-                    "type": "integer",
-                    "description": "The id of cinema"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Name of cinema"
-                  },
-                  "address": {
-                    "type": "string",
-                    "description": "Address of cinema"
-                  },
-                  "provinceCityId": {
-                    "type": "integer",
-                    "description": "Id of province/city"
-                  }
-                },
-                "example": {
-                  "id": 1,
-                  "name": "CGV VinCom",
-                  "address": "123 lalalal",
-                  "provinceCityId": 1
-                }
+                "$ref": "#/components/schemas/cinema"
               }
             }
           }
@@ -656,17 +439,6 @@
             }
           }
         },
-        "screenDtoBody": {
-          "description": "Screen information",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/screenDto"
-              }
-            }
-          }
-        },
         "showBody": {
           "description": "Show information",
           "required": true,
@@ -678,17 +450,6 @@
             }
           }
         },
-        "showDtoBody": {
-          "description": "Show information",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/showDto"
-              }
-            }
-          }
-        },
         "filmBody": {
           "description": "Film information",
           "required": true,
@@ -696,17 +457,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/film"
-              }
-            }
-          }
-        },
-        "filmDtoBody": {
-          "description": "Film information",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/filmDto"
               }
             }
           }
@@ -728,21 +478,18 @@
                 "type": "integer"
               },
               "required": false,
-              "description": "Province/city id to get list cinema by province/city\n\n?provinceCityId=10",
-              "example": "10",
-              "style": "form",
-              "explode": false
+              "description": "Province/city id to get list cinema by province/city"
             }
           ],
           "responses": {
             "200": {
               "$ref": "#/components/responses/ListCinemaResponse"
             },
-            "404": {
-              "$ref": "#/components/responses/404-NotFound"
+            "400": {
+              "description": "Bad resquest. The Province/City Id must be an integer or larger than 0"
             },
-            "500": {
-              "$ref": "#/components/responses/500-ServerError"
+            "5XX": {
+              "description": "Unexpected error"
             }
           }
         },
@@ -758,10 +505,10 @@
               "description": "OK"
             },
             "400": {
-              "$ref": "#/components/responses/400-BadRequest"
+              "description": "Bad request. "
             }, 
             "500": {
-              "$ref": "#/components/responses/500-ServerError"
+              "description": "Server Error"
             }
           }
         },
@@ -777,10 +524,10 @@
               "description": "OK"
             },
             "404": {
-              "$ref": "#/components/responses/404-NotFound"
+              "description": "Not Found"
             },
             "500": {
-              "$ref": "#/components/responses/500-ServerError"
+              "description": "Server Error"
             }
           }
         }
@@ -852,7 +599,7 @@
           "tags": ["Screen"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/screenDtoBody"
+            "$ref": "#/components/requestBodies/screenBody"
           },
           "responses": {
             "200": {
@@ -863,25 +610,6 @@
             },
             "500": {
               "description": "Server error"
-            }
-          }
-        },
-        "put": {
-          "description": "Update screen information",
-          "tags": ["Screen"],
-          "parameters": [],
-          "requestBody": {
-            "$ref": "#/components/requestBodies/screenBody"
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Server Error"
             }
           }
         }
@@ -898,6 +626,29 @@
           "responses": {
             "200": {
               "$ref": "#/components/responses/ScreenResponse"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "Update screen information",
+          "tags": ["Screen"],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/ScreenPath"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/screenBody"
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
             },
             "404": {
               "description": "Not Found"
@@ -943,7 +694,7 @@
           "tags": ["Show"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/showDtoBody"
+            "$ref": "#/components/requestBodies/showBody"
           },
           "responses": {
             "200": {
@@ -952,25 +703,6 @@
             "400": {
               "description": "Bad Request"
             },
-            "500": {
-              "description": "Server Error"
-            }
-          }
-        },
-        "put": {
-          "description": "Update show information",
-          "tags": ["Show"],
-          "parameters": [],
-          "requestBody": {
-            "$ref": "#/components/requestBodies/showBody"
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            }, 
             "500": {
               "description": "Server Error"
             }
@@ -993,6 +725,29 @@
             "404": {
               "description": "Not Found"
             },
+            "500": {
+              "description": "Server Error"
+            }
+          }
+        },
+        "put": {
+          "description": "Update show information",
+          "tags": ["Show"],
+          "parameters": [
+            {
+              "$ref": "#/components/parameters/ShowPath"
+            }
+          ],
+          "requestBody": {
+            "$ref": "#/components/requestBodies/showBody"
+          },
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            }, 
             "500": {
               "description": "Server Error"
             }
@@ -1025,10 +780,9 @@
         },
         "post": {
           "description": "Add film to database",
-          "tags": ["Film"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/filmDtoBody"
+            "$ref": "#/components/requestBodies/filmBody"
           },
           "responses": {
             "200": {
@@ -1041,42 +795,7 @@
               "description": "Server Error"
             }
           }
-        },
-        "put": {
-          "description": "Update film information",
-          "tags": ["Film"],
-          "parameters": [],
-          "requestBody": {
-            "$ref": "#/components/requestBodies/filmBody"
-          },
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Server Error"
-            }
-          }
-        }
-      },
-      "/film/{filmId}": {
-        "get": {
-          "description": "Get inforamtion of film",
-          "tags": ["Film"],
-          "parameters": [
-            {
-              "$ref": "#/components/parameters/FilmPath"
-            }
-          ],
-          "responses": {
-            "200": {
-              "$ref": "#/components/responses/FilmResponse"
-            }
-          }
         }
       }
     }
-}
+  }
