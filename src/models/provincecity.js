@@ -1,6 +1,6 @@
 'use strict'
 
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     const provincecity = sequelize.define('provincecity',
         {
             id: {
