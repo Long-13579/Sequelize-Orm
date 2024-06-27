@@ -13,6 +13,9 @@ router.get('/', async (req, res) => {
     }
 
     let cinemas = await CinemaService.GetAll();
+    cinemas.forEach(cinema => {
+        console.log(cinema.id);
+    });
     res.status(200);
     res.send(cinemas);
     return;

@@ -1,5 +1,4 @@
 {
-  'HEEEEEEEEEEEEEEEEEEEEEEHEEEEEEEEEEEEEE'
     "openapi":"3.0.2",
     "info": {
       "title":"API Title",
@@ -11,28 +10,23 @@
     "components": {
       "schemas": {
         "cinema": {
-          "type": "object",
           "required": [
             "id", "Name", "Address", "ProvinceCity"
           ],
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "The auto-generated id of cinema"
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The auto-generated id of cinema"
+                }
+              }
             },
-            "name": {
-              "type": "string",
-              "description": "Name of cinema"
-            },
-            "address": {
-              "type": "string",
-              "description": "Address of cinema"
-            },
-            "provinceCity": {
-              "$ref": "#/components/schemas/provinceCity",
-              "description": ""
+            {
+              "$ref": "#/components/schemas/cinemaWithoutId"
             }
-          },
+          ],
           "example": {
             "id": 1, 
             "name": "CGV",
@@ -76,21 +70,7 @@
             "cinemas": {
               "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "integer",
-                    "description": "The auto-generated id of cinema"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Name of cinema"
-                  },
-                  "address": {
-                    "type": "string",
-                    "description": "Address of cinema"
-                  }
-                }
+                "$ref": "#/components/schemas/cinema"
               }
             }
           },
@@ -101,37 +81,43 @@
               {
                 "id": 1,
                 "name": "CGV",
-                "address": "123 Nguyen Ba Hoc"
+                "address": "123 Nguyen Ba Hoc",
+                "provinceCityId": 1
+              },
+              {
+                "id": 2,
+                "name": "VGC",
+                "address": "321 Nguyen Ba Hoc",
+                "provinceCityId": 1
               }
             ]
           }
         },
         "screen": {
-          "type": "object",
           "required": [
-            "id", "seatMatrix", "cinemaId"
+            "id"
           ],
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "The auto-generated id of screen"
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The auto-generated id of screen"
+                }
+              }
             },
-            "seatMatrix": {
-              "type": "string",
-              "description": "Path of file seat matrix"
-            },
-            "cinemaId": {
-              "type": "integer",
-              "description": "The id of cinema"
+            {
+              "$ref": "#/components/schemas/screenWithoutId"
             }
-          },
+          ],
           "example": {
             "id": 1,
             "seatMatrix": "./screen1.txt",
             "cinemaId": 1
           }
         },
-        "screenDto": {
+        "screenWithoutId": {
           "type": "object",
           "required": [
             "seatMatrix", "cinemaId"
@@ -151,7 +137,7 @@
             "cinemaId": 1
           }
         },
-        "cinemaDto": {
+        "cinemaWithoutId": {
           "type": "object",
           "required": [
             "name", "address", "provinceCityId"
@@ -177,45 +163,23 @@
           }
         },
         "show": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "The auto-generated id of show"
+          "required": [
+            "id"
+          ],
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The auto-generated id of show"
+                }
+              }
             },
-            "filmId": {
-              "type": "integer",
-              "description": "The film's id of this show"
-            },
-            "screenId": {
-              "type": "integer",
-              "description": "The screen's id of this show"
-            },
-            "timeStart": {
-              "type": "string",
-              "description": "The start time of this show"
-            },
-            "price": {
-              "type": "integer",
-              "description": "The price of this show"
-            },
-            "seatMatrix": {
-              "type": "string",
-              "description": "Path of file seat matrix"
-            },
-            "formatId": {
-              "type": "integer",
-              "description": "The id of format"
-            },
-            "subtitle": {
-              "type": "boolean",
-              "description": "True is have subtitle, false is have not subtile"
-            },
-            "dubbing": {
-              "type": "boolean",
-              "description": "True is have dubbing, false is have not dubbing"
+            {
+              "$ref": "#/components/schemas/showWithoutId"
             }
-          },
+          ],
           "example": {
             "id": 1,
             "filmId": 1,
@@ -228,7 +192,17 @@
             "dubbing": true
           }
         },
-        "showDto": {
+        "showWithoutId": {
+          "required": [
+            "filmId",
+            "screenId", 
+            "timeStart",
+            "price", 
+            "seatMatrix", 
+            "formatId", 
+            "subtitle", 
+            "dubbing"
+          ],
           "type": "object",
           "properties": {
             "filmId": {
@@ -276,57 +250,21 @@
           }
         },
         "film": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "The auto-generated id of film"
+          "required": ["id"],
+          "allOf": [
+            {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The auto-generated id of film"
+                }
+              }
             },
-            "filmName": {
-              "type": "string",
-              "description": "The name of film"
-            },
-            "duration": {
-              "type": "integer",
-              "description": "The duration of film"
-            },
-            "dateStart": {
-              "type": "string",
-              "description": "The date start of film"
-            },
-            "dateEnd": {
-              "type": "string",
-              "description": "The date start of film"
-            },
-            "director": {
-              "type": "string",
-              "description": "The director of film"
-            },
-            "actor": {
-              "type": "string",
-              "description": "The actors of film"
-            },
-            "subtitle": {
-              "type": "boolean",
-              "description": "True when film have subtitle"
-            },
-            "language": {
-              "type": "string",
-              "description": "The language of film"
-            },
-            "rateId": {
-              "type": "integer",
-              "description": "The rate of the film"
-            },
-            "poster": {
-              "type": "string",
-              "description": "The path of the poster file"
-            },
-            "trailer": {
-              "type": "string",
-              "description": "The path of the trailer video"
+            {
+              "$ref": "#/components/schemas/filmWithoutId"
             }
-          },
+          ],
           "example": {
             "id": 1,
             "filmName": "Absolute cinema",
@@ -342,7 +280,20 @@
             "trailer": "./trailer.mp4"
           }
         },
-        "filmDto": {
+        "filmWithoutId": {
+          "required": [
+            "filmName",
+            "duration",
+            "dateStart",
+            "dateEnd",
+            "director",
+            "actor",
+            "subtile",
+            "language",
+            "rateId",
+            "poster",
+            "trailer"
+          ],
           "type": "object",
           "properties": {
             "filmName": {
@@ -353,7 +304,7 @@
               "type": "integer",
               "description": "The duration of film"
             },
-            "dateSrart": {
+            "dateStart": {
               "type": "string",
               "description": "The date start of film"
             },
@@ -414,6 +365,65 @@
               "type": "string"
             }
           }
+        },
+        "cinemaDto": {
+          "required": [
+            "id",
+            "poster",
+            "ageRating",
+            "format",
+            "title",
+            "trailerLink",
+            "category",
+            "nation", 
+            "subtitle",
+            "duration"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "poster": {
+              "type": "string"
+            },
+            "ageRating": {
+              "type": "string"
+            },
+            "format": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "trailerLink": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "nation": {
+              "type": "string"
+            },
+            "subtitle": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "integer"
+            }
+          },
+          "example": {
+            "id": 1,
+            "poster": "./poster.img",
+            "ageRating": "PG-13",
+            "format": "2D",
+            "title": "Movie Name",
+            "trailerLink": "./trailer.mp4",
+            "category": "Drama",
+            "nation": "Vietnam",
+            "subtitle": "VN",
+            "duration": 127
+          }
         }
       },
       "responses": {
@@ -445,7 +455,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/cinema"
+                "$ref": "#/components/schemas/cinemaDto"
               }
             }
           }
@@ -457,7 +467,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/cinema"
+                  "$ref": "#/components/schemas/cinemaDto"
                 }
               }
             }
@@ -655,13 +665,13 @@
         }
       },
       "requestBodies": {
-        "cinemaDtoBody": {
+        "cinemaWithoutIdBody": {
           "description": "Cinema information",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/cinemaDto"
+                "$ref": "#/components/schemas/cinemaWithoutId"
               }
             }
           }
@@ -718,13 +728,13 @@
             }
           }
         },
-        "screenDtoBody": {
+        "screenWithoutIdBody": {
           "description": "Screen information",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/screenDto"
+                "$ref": "#/components/schemas/screenWithoutId"
               }
             }
           }
@@ -740,13 +750,13 @@
             }
           }
         },
-        "showDtoBody": {
+        "showWithoutIdBody": {
           "description": "Show information",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/showDto"
+                "$ref": "#/components/schemas/showWithoutId"
               }
             }
           }
@@ -762,13 +772,13 @@
             }
           }
         },
-        "filmDtoBody": {
+        "filmWithoutIdBody": {
           "description": "Film information",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/filmDto"
+                "$ref": "#/components/schemas/filmWithoutId"
               }
             }
           }
@@ -813,7 +823,7 @@
           "tags": ["Cinema"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/cinemaDtoBody"
+            "$ref": "#/components/requestBodies/cinemaBody"
           },
           "responses": {
             "200": {
@@ -832,7 +842,7 @@
           "tags": ["Cinema"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/cinemaBody"
+            "$ref": "#/components/requestBodies/cinemaWithoutIdBody"
           },
           "responses": {
             "200": {
@@ -917,7 +927,7 @@
           "tags": ["Screen"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/screenDtoBody"
+            "$ref": "#/components/requestBodies/screenWithoutIdBody"
           },
           "responses": {
             "200": {
@@ -1005,7 +1015,7 @@
           "tags": ["Show"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/showDtoBody"
+            "$ref": "#/components/requestBodies/showWithoutIdBody"
           },
           "responses": {
             "200": {
@@ -1090,7 +1100,7 @@
           "tags": ["Film"],
           "parameters": [],
           "requestBody": {
-            "$ref": "#/components/requestBodies/filmDtoBody"
+            "$ref": "#/components/requestBodies/filmWithoutIdBody"
           },
           "responses": {
             "200": {
