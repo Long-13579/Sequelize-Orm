@@ -19,6 +19,9 @@ app.use(
 );
 
 app.use('/cinema', cinemaRoute);
+app.get('/', (req, res) => {
+    res.send('Hello world');
+});
 
 app.listen(PORT, (error) =>{
     if(!error)
